@@ -1,7 +1,7 @@
 class CodeAnalyzer
 
   attr_reader :codes, :graphs_data
-  
+
   def initialize(code='')
     codes_array = code.split(',')
     @codes = remove_comments(codes_array)
@@ -10,7 +10,7 @@ class CodeAnalyzer
   end
 
   # The 'results' method is the brains behind the time complexity analysis.
-  # It looks to see whether the code contains [*], in which case the user is indicating 
+  # It looks to see whether the code contains [*], in which case the user is indicating
   # that they want to test multiple size arrays with the given algorithm.
   # The method then runs the submitted code with various size arrays, ranging from 100 up to 3000.
   # The data is saved as an array of x, y coordinates. x indicates the amount of data,
@@ -20,8 +20,16 @@ class CodeAnalyzer
     @codes.each_with_index do |code, i|
       if code.index("[*]")
         [100, 500, 1000, 1500, 2000, 2500, 3000].each do |data|
-          @graphs_data[i] << {x: data, y: run_code(code.gsub("[*]", "#{(1..data).to_a}"))}
+           var = code.gsub("[*]", "#{(1..data).to_a}")
+           results_of_run_code = run_code(var)
+          @graphs_data[i] << {x: data, y: results_of_run_code}
+      p "++++++++++++++++++++++++++++++++", code
         end
+      elsif code.index("[***]")
+        [100, 500, 1000, 1500, 2000, 2500, 3000].each do |data|
+          @graphs_data[i] << {x: data, y: run_code(code.gsub("[***]", "#{data}"))}
+        end
+        p "===================================="
       end
     end
     return @graphs_data
@@ -39,11 +47,11 @@ class CodeAnalyzer
   end
 
   private
-  
+
   def remove_comments(code_array)
     code_array.map do |code_string|
-      code_string.lines.reject do |line| 
-        line.lstrip.start_with?('#', '=begin', '=end') 
+      code_string.lines.reject do |line|
+        line.lstrip.start_with?('#', '=begin', '=end')
       end.join
     end
   end
