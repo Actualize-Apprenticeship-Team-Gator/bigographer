@@ -23,13 +23,11 @@ class CodeAnalyzer
            var = code.gsub("[*]", "#{(1..data).to_a}")
            results_of_run_code = run_code(var)
           @graphs_data[i] << {x: data, y: results_of_run_code}
-      p "++++++++++++++++++++++++++++++++", code
         end
       elsif code.index("[***]")
         [100, 500, 1000, 1500, 2000, 2500, 3000].each do |data|
           @graphs_data[i] << {x: data, y: run_code(code.gsub("[***]", "#{data}"))}
         end
-        p "===================================="
       end
     end
     return @graphs_data
