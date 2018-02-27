@@ -30,15 +30,16 @@ class CodeAnalyzer
         end
       end
     end
-    slope
     return @graphs_data
   end
 
   def complexity
-    p "^%&*(&^%$#%^&*^%$#%^&*^%$#**&^%$#%^&&*^%$#%^&*(&^%$#^&*(&^%$#%^&*(&^%$^&*(&^%$#%^&*()*&^%$#@$%^&*()&^%$#@$%^&*(&^%$#@!"
-    p @graphs_data[0]
-    y_array = [201, 1001, 2001]
-    x_array = [100, 500, 1000]
+    p "^%&*(&^%$#%^&*^%$#%^&*^%$#**&^%$#%^&&*^%$#%^&*(&^%$#^&*(&^%$#%^&*(&^%$^&*(&^%$#%^&*()*&^%$#@$%^&*()&^%$#@$%^&*(&^%$#@!" 
+    @graphs_data.each do |graph_data|
+      p graph_data
+      # p graph_data[0][:y]
+    end
+    'O(n)'
   end
 
   # With the 'run_code' method, we attempt to run the code and handle errors if they arise. This doesn't properly handle syntax
