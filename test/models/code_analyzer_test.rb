@@ -34,7 +34,14 @@ class CodeAnalyzerTest < ActiveSupport::TestCase
 
   test "#complexity - returns 'O(n)' for code snippets that have a Big O complexity of O(n)" do
     analyzer = CodeAnalyzer.new("sum = 0\n[*].each do |number|\nsum += number\nend")
-    assert_equal(analyzer.complexity, 'O(n)')
+    analyzer.results
+    assert_equal analyzer.complexity, 'O(n)'
+  end
+
+  test "#complexity - returns 'O(n**2)' for code snippets that have a Big O complexity of O(n**2)" do
+    analyzer = CodeAnalyzer.new("sum = 0\n[*].each do |num|\n[*].each do |number|\nsum += number\nend\nend")
+    analyzer.results
+    assert_equal analyzer.complexity, 'O(n**2)'
   end
 
   test '#run_code - returns code that skips comments' do

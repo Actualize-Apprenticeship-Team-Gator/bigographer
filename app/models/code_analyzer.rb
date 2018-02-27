@@ -34,13 +34,31 @@ class CodeAnalyzer
   end
 
   def complexity
-    p "^%&*(&^%$#%^&*^%$#%^&*^%$#**&^%$#%^&&*^%$#%^&*(&^%$#^&*(&^%$#%^&*(&^%$^&*(&^%$#%^&*()*&^%$#@$%^&*()&^%$#@$%^&*(&^%$#@!" 
+    p "^%&*(&^%$#%^&*^%$#%^&*^%$#**&^%$#%^&&*^%$#%^&*(&^%$#^&*(&^%$#%^&*(&^%$^&*(&^%$#%^&*()*&^%$#@$%^&*()&^%$#@$%^&*(&^%$#@!"
     @graphs_data.each do |graph_data|
+      y = graph_data[3][:y] #
+      x = graph_data[3][:x] #
+      step1 = graph_data[2][:y] - graph_data[1][:y]
+      step2 = graph_data[3][:y] - graph_data[2][:y]
+      p step1
+      p step2
       p graph_data
-      # p graph_data[0][:y]
+      if step1 == step2
+        return 'O(n)'
+      else
+        return 'O(n**2)'
+      end
     end
-    'O(n)'
   end
+
+
+
+  # sum = 0
+  # [*].each do |num|
+  #   [*].each do |number|
+  #     sum += number
+  #   end
+  # end
 
   # With the 'run_code' method, we attempt to run the code and handle errors if they arise. This doesn't properly handle syntax
   # errors, so will need some further work.
