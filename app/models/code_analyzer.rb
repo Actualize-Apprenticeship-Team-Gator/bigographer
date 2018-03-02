@@ -19,7 +19,8 @@ class CodeAnalyzer
   def results
     @codes.each_with_index do |code, i|
       if code.index("[*]")
-        [100, 500, 1000, 1500, 2000, 2500, 3000].each do |data|
+        # [100, 500, 1000, 1500, 2000, 2500, 3000].each do |data|
+        [1, 2, 4, 8, 16, 32].each do |data|
            var = code.gsub("[*]", "#{(1..data).to_a}")
            results_of_run_code = run_code(var)
           @graphs_data[i] << {x: data, y: results_of_run_code}
@@ -38,15 +39,25 @@ class CodeAnalyzer
     @graphs_data.each do |graph_data|
       y = graph_data[3][:y] #
       x = graph_data[3][:x] #
-      step1 = graph_data[2][:y] - graph_data[1][:y]
-      step2 = graph_data[3][:y] - graph_data[2][:y]
+      step1 = (graph_data[2][:y] - graph_data[1][:y])/(graph_data[2][:x] - graph_data[1][:x])
+      step2 = (graph_data[3][:y] - graph_data[2][:y])/(graph_data[3][:x] - graph_data[2][:x])
+      step3 = (graph_data[4][:y] - graph_data[3][:y])/(graph_data[4][:x] - graph_data[3][:x])
+      step4 = (graph_data[5][:y] - graph_data[4][:y])/(graph_data[5][:x] - graph_data[4][:x])
+      # step5 = (graph_data[6][:y] - graph_data[5][:y])/(graph_data[6][:x] - graph_data[5][:x])
+      
+      
       p step1
       p step2
+      p step3
+      p step4
+      # p step5
       p graph_data
       if step1 == step2
         return 'O(n)'
-      else
+      elsif step2 - step1 == 2000 
         return 'O(n**2)'
+      else
+        return 'O(n**3)'
       end
     end
   end
